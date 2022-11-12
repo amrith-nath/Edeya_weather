@@ -1,9 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import '../constants/colors/colors.dart';
 import '../constants/fonts/fonts.dart';
+import '../constants/svgs/svgs.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -68,13 +69,14 @@ class _ScreenSplashState extends State<ScreenSplash> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
+                                    SvgPicture.asset(
+                                      splashSvg,
+                                      width: 25,
+                                      height: 25,
+                                    ),
                                     Text(
                                       'Weather',
                                       style: GoogleFont.splashThinStyle,
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/svg/svgviewer-output.svg',
-                                      color: Colors.amber,
                                     ),
                                   ],
                                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'presentation/constants/colors/colors.dart';
+import 'presentation/home/screen_home.dart';
 import 'presentation/splash/screen_splash.dart';
 
 void main() {
