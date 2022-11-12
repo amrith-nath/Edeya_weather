@@ -37,6 +37,6 @@ class GoogleFont {
   static final TextStyle splashThinStyle = GoogleFonts.poppins(
     fontSize: 20,
     fontWeight: FontWeight.w300,
-    color: Colors.grey.shade500,
+    color: kgreytextColor,
   );
 }

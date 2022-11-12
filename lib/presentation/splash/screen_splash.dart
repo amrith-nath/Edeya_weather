@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../constants/colors/colors.dart';
 import '../constants/fonts/fonts.dart';
+import '../constants/size/size.dart';
 import '../constants/svgs/svgs.dart';
+import '../home/screen_home.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -73,7 +75,9 @@ class _ScreenSplashState extends State<ScreenSplash> {
                                       splashSvg,
                                       width: 25,
                                       height: 25,
+                                      color: kgreytextColor,
                                     ),
+                                    kwidth5,
                                     Text(
                                       'Weather',
                                       style: GoogleFont.splashThinStyle,
@@ -97,5 +101,9 @@ class _ScreenSplashState extends State<ScreenSplash> {
     setState(() {
       kSwitch = true;
     });
+    await Future<dynamic>.delayed(const Duration(seconds: 6));
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).push(MaterialPageRoute<ScreenHome>(
+        builder: (BuildContext ctx) => const ScreenHome()));
   }
 }
