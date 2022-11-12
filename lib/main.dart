@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'presentation/constants/colors/colors.dart';
 import 'presentation/home/screen_home.dart';
 import 'presentation/splash/screen_splash.dart';
+import 'presentation/theme/themes.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -23,10 +24,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) {
-        return const MaterialApp(
+        return MaterialApp(
           title: 'Edeya Weather',
+          theme: MyTheme.kTheme,
           debugShowCheckedModeBanner: false,
-          home: ScreenSplash(),
+          home: const ScreenSplash(),
         );
       },
     );

@@ -7,6 +7,7 @@ import '../constants/fonts/fonts.dart';
 import '../constants/size/size.dart';
 import '../constants/svgs/svgs.dart';
 import '../home/screen_home.dart';
+import '../onboarding/onboarding.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
@@ -103,7 +104,10 @@ class _ScreenSplashState extends State<ScreenSplash> {
     });
     await Future<dynamic>.delayed(const Duration(seconds: 6));
     // ignore: use_build_context_synchronously
-    Navigator.of(context).push(MaterialPageRoute<ScreenHome>(
-        builder: (BuildContext ctx) => const ScreenHome()));
+    Navigator.of(context).push(
+      MaterialPageRoute<ScreenHome>(
+        builder: (BuildContext ctx) => const ScreenOnboarding(),
+      ),
+    );
   }
 }
