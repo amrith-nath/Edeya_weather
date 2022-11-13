@@ -57,6 +57,18 @@ class GoogleFont {
     color: kgreytextColor,
   );
 
+  static final TextStyle userNameStyle = GoogleFonts.inter(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: kgreytextColor,
+  );
+
+  static final TextStyle userEmailStyle = GoogleFonts.inter(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: kgreytextColor,
+  );
+
   static final TextStyle onboardTitleStyle = GoogleFonts.robotoCondensed(
     fontSize: 40,
     fontWeight: FontWeight.w500,

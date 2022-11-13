@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/colors/colors.dart';
 import '../../core/fonts/fonts.dart';
@@ -19,7 +17,7 @@ class ScreenLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    FocusScopeNode currentFocus = FocusScope.of(context);
+    final FocusScopeNode currentFocus = FocusScope.of(context);
 
     return Scaffold(
       body: Center(
@@ -87,12 +85,16 @@ class ScreenLogin extends StatelessWidget {
     );
   }
 
-  void onValiate(BuildContext context) {
+  Future<void> onValiate(BuildContext context) async {
     if (emailController.value.text == 'testapp@google.com' &&
         passwordController.value.text == 'Test@123456') {
+      final SharedPreferences preferences =
+          await SharedPreferences.getInstance();
+      await preferences.setBool('', true);
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
         PageTransition<ScreenHome>(
-          child: ScreenHome(),
+          child: const ScreenHome(),
           childCurrent: ScreenLogin(),
           type: PageTransitionType.bottomToTopJoined,
           duration: const Duration(milliseconds: 500),
