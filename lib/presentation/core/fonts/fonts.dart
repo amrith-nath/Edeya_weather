@@ -12,6 +12,21 @@ class GoogleFont {
     // decoration: TextDecoration.underline,
   );
 
+  static final TextStyle loginTextStyle = GoogleFonts.manrope(
+    fontSize: 32,
+    fontWeight: FontWeight.bold,
+    letterSpacing: 1,
+    color: Colors.black,
+    // decoration: TextDecoration.underline,
+  );
+
+  static final TextStyle loginSubTextStyle = GoogleFonts.manrope(
+    fontSize: 28,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 1,
+    color: Colors.black,
+    // decoration: TextDecoration.underline,
+  );
   static final TextStyle splashStyleYellow = GoogleFonts.poppins(
     fontSize: 42,
     fontWeight: FontWeight.w600,
@@ -44,16 +59,15 @@ class GoogleFont {
 
   static final TextStyle onboardTitleStyle = GoogleFonts.robotoCondensed(
     fontSize: 40,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     color: kBlack,
     letterSpacing: 1,
   );
 
   static final TextStyle onboardSubTitleStyle = GoogleFonts.inter(
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: FontWeight.w500,
-    color: kgreytextColor,
-    height: 1.5,
-    letterSpacing: 2,
+    color: kBlack.withOpacity(0.7),
+    letterSpacing: 1,
   );
 }

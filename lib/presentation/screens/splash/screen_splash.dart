@@ -53,7 +53,7 @@ class ScreenSplash extends StatelessWidget {
                     waveDuration: const Duration(seconds: 1),
                     text: 'Edeya',
                     boxBackgroundColor: kWhite,
-                    waveColor: kBlue,
+                    waveColor: kButtonColor,
                     textStyle: GoogleFont.splashStyle,
                   ),
                 ),

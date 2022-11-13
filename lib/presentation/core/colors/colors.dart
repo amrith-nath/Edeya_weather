@@ -10,3 +10,5 @@ const Color kDarkGreen = Color.fromARGB(255, 0, 110, 93);
 const Color kBlack = Colors.black;
 Color kgreytextColor = Colors.grey.shade700;
 const Color kGrey = Colors.grey;
+
+const Color kButtonColor = Color(0xff1D3557);
