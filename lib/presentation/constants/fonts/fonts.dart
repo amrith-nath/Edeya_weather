@@ -4,9 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import '../colors/colors.dart';
 
 class GoogleFont {
-  static final TextStyle splashStyle = GoogleFonts.poppins(
-    fontSize: 42,
+  static final TextStyle splashStyle = GoogleFonts.antonio(
+    fontSize: 48,
     fontWeight: FontWeight.w500,
+    letterSpacing: 5,
     color: kTextColor,
   );
 
@@ -34,7 +35,7 @@ class GoogleFont {
     color: kGreen,
   );
 
-  static final TextStyle splashThinStyle = GoogleFonts.poppins(
+  static final TextStyle splashThinStyle = GoogleFonts.inter(
     fontSize: 20,
     fontWeight: FontWeight.w300,
     color: kgreytextColor,

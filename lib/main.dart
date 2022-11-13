@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'presentation/constants/colors/colors.dart';
-import 'presentation/home/screen_home.dart';
-import 'presentation/splash/screen_splash.dart';
+import 'presentation/screens/home/screen_home.dart';
+import 'presentation/screens/splash/screen_splash.dart';
 import 'presentation/theme/themes.dart';
 
 void main() {

@@ -2,11 +2,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../constants/colors/colors.dart';
-import '../constants/fonts/fonts.dart';
-import '../constants/size/size.dart';
-import '../constants/svgs/svgs.dart';
-import '../home/screen_home.dart';
+import 'package:page_transition/page_transition.dart';
+import '../../constants/colors/colors.dart';
+import '../../constants/fonts/fonts.dart';
+import '../../constants/size/size.dart';
+import '../../constants/svgs/svgs.dart';
 import '../onboarding/onboarding.dart';
 
 class ScreenSplash extends StatefulWidget {
@@ -34,7 +34,6 @@ class _ScreenSplashState extends State<ScreenSplash> {
       body: SafeArea(
         child: Center(
           child: SizedBox(
-            // color: Colors.blue,
             height: 300,
             width: double.infinity,
             child: Stack(
@@ -59,7 +58,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
                     : const SizedBox(),
                 kSwitch
                     ? Positioned(
-                        bottom: 80,
+                        bottom: 70,
                         child: FadeInUp(
                             key: const Key('subText'),
                             duration: const Duration(milliseconds: 900),
@@ -97,17 +96,26 @@ class _ScreenSplashState extends State<ScreenSplash> {
     );
   }
 
+//Navigation Logic-------->
   Future<void> startNavigate() async {
+    await startAnimate();
+    await Future<dynamic>.delayed(const Duration(seconds: 6));
+
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+      context,
+      PageTransition<ScreenOnboarding>(
+        child: const ScreenOnboarding(),
+        type: PageTransitionType.fade,
+        duration: const Duration(milliseconds: 500),
+      ),
+    );
+  }
+
+  Future<void> startAnimate() async {
     await Future<dynamic>.delayed(const Duration(seconds: 1));
     setState(() {
       kSwitch = true;
     });
-    await Future<dynamic>.delayed(const Duration(seconds: 6));
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).push(
-      MaterialPageRoute<ScreenHome>(
-        builder: (BuildContext ctx) => const ScreenOnboarding(),
-      ),
-    );
   }
 }
