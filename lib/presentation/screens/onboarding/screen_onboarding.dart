@@ -10,7 +10,7 @@ import '../../../domine/onboarding/onboarding_notifier.dart';
 import '../../core/colors/colors.dart';
 import '../../core/fonts/fonts.dart';
 import '../../core/size/size.dart';
-import '../home/screen_home.dart';
+import '../login/screen_login.dart';
 
 class ScreenOnboarding extends StatelessWidget {
   const ScreenOnboarding({super.key});
@@ -135,8 +135,8 @@ class ScreenOnboarding extends StatelessWidget {
       ),
       onPressed: () {
         Navigator.of(context).pushReplacement(
-          PageTransition<ScreenHome>(
-            child: ScreenHome(),
+          PageTransition<ScreenLogin>(
+            child: ScreenLogin(),
             childCurrent: const ScreenOnboarding(),
             type: PageTransitionType.bottomToTopJoined,
             duration: const Duration(milliseconds: 500),
