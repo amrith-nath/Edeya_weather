@@ -3,10 +3,10 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../constants/colors/colors.dart';
-import '../../constants/fonts/fonts.dart';
-import '../../constants/size/size.dart';
-import '../../constants/svgs/svgs.dart';
+import '../../core/colors/colors.dart';
+import '../../core/fonts/fonts.dart';
+import '../../core/size/size.dart';
+import '../../core/svgs/svgs.dart';
 import '../onboarding/onboarding.dart';
 
 class ScreenSplash extends StatefulWidget {
@@ -102,14 +102,14 @@ class _ScreenSplashState extends State<ScreenSplash> {
     await Future<dynamic>.delayed(const Duration(seconds: 6));
 
     // ignore: use_build_context_synchronously
-    Navigator.push(
-      context,
-      PageTransition<ScreenOnboarding>(
-        child: const ScreenOnboarding(),
-        type: PageTransitionType.fade,
-        duration: const Duration(milliseconds: 500),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   PageTransition<ScreenOnboarding>(
+    //     child: const ScreenOnboarding(),
+    //     type: PageTransitionType.fade,
+    //     duration: const Duration(milliseconds: 500),
+    //   ),
+    // );
   }
 
   Future<void> startAnimate() async {
