@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/colors/colors.dart';
+import '../core/colors/colors.dart';
 
 class MyTheme {
   static ThemeData kTheme = ThemeData(

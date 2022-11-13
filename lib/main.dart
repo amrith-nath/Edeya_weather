@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'presentation/constants/colors/colors.dart';
-import 'presentation/screens/home/screen_home.dart';
+import 'presentation/core/colors/colors.dart';
 import 'presentation/screens/splash/screen_splash.dart';
 import 'presentation/theme/themes.dart';
 
@@ -22,15 +20,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          title: 'Edeya Weather',
-          theme: MyTheme.kTheme,
-          debugShowCheckedModeBanner: false,
-          home: const ScreenSplash(),
-        );
-      },
+    return MaterialApp(
+      title: 'Edeya Weather',
+      theme: MyTheme.kTheme,
+      debugShowCheckedModeBanner: false,
+      home: const ScreenSplash(),
     );
   }
 }

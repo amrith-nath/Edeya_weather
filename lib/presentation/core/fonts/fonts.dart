@@ -4,11 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../colors/colors.dart';
 
 class GoogleFont {
-  static final TextStyle splashStyle = GoogleFonts.antonio(
+  static final TextStyle splashStyle = GoogleFonts.manrope(
     fontSize: 48,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 5,
-    color: kTextColor,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 2,
+    color: Colors.black,
+    // decoration: TextDecoration.underline,
   );
 
   static final TextStyle splashStyleYellow = GoogleFonts.poppins(
@@ -38,6 +39,18 @@ class GoogleFont {
   static final TextStyle splashThinStyle = GoogleFonts.inter(
     fontSize: 20,
     fontWeight: FontWeight.w300,
+    color: kgreytextColor,
+  );
+
+  static final TextStyle onboardTitleStyle = GoogleFonts.robotoCondensed(
+    fontSize: 40,
+    fontWeight: FontWeight.w500,
+    color: kBlack,
+  );
+
+  static final TextStyle onboardSubTitleStyle = GoogleFonts.robotoCondensed(
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
     color: kgreytextColor,
   );
 }
