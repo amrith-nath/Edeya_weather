@@ -8,4 +8,5 @@ const Color kRed = Color(0xffEF7A8E);
 const Color kGreen = Color(0xff06D6A0);
 const Color kDarkGreen = Color.fromARGB(255, 0, 110, 93);
 const Color kBlack = Colors.black;
-Color kgreytextColor = Colors.grey.shade500;
+Color kgreytextColor = Colors.grey.shade700;
+const Color kGrey = Colors.grey;

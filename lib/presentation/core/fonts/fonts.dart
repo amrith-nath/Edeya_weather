@@ -44,13 +44,16 @@ class GoogleFont {
 
   static final TextStyle onboardTitleStyle = GoogleFonts.robotoCondensed(
     fontSize: 40,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     color: kBlack,
+    letterSpacing: 1,
   );
 
-  static final TextStyle onboardSubTitleStyle = GoogleFonts.robotoCondensed(
-    fontSize: 20,
+  static final TextStyle onboardSubTitleStyle = GoogleFonts.inter(
+    fontSize: 16,
     fontWeight: FontWeight.w500,
     color: kgreytextColor,
+    height: 1.5,
+    letterSpacing: 2,
   );
 }

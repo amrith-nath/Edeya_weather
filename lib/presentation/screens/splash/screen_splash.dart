@@ -10,7 +10,7 @@ import '../../core/colors/colors.dart';
 import '../../core/fonts/fonts.dart';
 import '../../core/size/size.dart';
 import '../../core/svgs/svgs.dart';
-import '../onboarding/onboarding.dart';
+import '../onboarding/screen_onboarding.dart';
 
 class ScreenSplash extends StatelessWidget {
   const ScreenSplash({super.key});
@@ -53,7 +53,7 @@ class ScreenSplash extends StatelessWidget {
                     waveDuration: const Duration(seconds: 1),
                     text: 'Edeya',
                     boxBackgroundColor: kWhite,
-                    waveColor: kGreen,
+                    waveColor: kBlue,
                     textStyle: GoogleFont.splashStyle,
                   ),
                 ),
