@@ -79,21 +79,6 @@ class ScreenHome extends StatelessWidget {
                                   key: UniqueKey(),
                                   startActionPane: ActionPane(
                                     motion: const ScrollMotion(),
-                                    dismissible:
-                                        DismissiblePane(onDismissed: () async {
-                                      Navigator.of(context).push(
-                                        PageTransition<ScreenWeather>(
-                                          child: ScreenWeather(
-                                              isCelcious: user!.isCelcious),
-                                          type: PageTransitionType.leftToRight,
-                                          reverseDuration:
-                                              const Duration(milliseconds: 400),
-                                          duration:
-                                              const Duration(milliseconds: 400),
-                                          curve: Curves.easeIn,
-                                        ),
-                                      );
-                                    }),
                                     children: <Widget>[
                                       SlidableAction(
                                         onPressed: (BuildContext ctx) async {

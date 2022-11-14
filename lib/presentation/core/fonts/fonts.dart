@@ -27,6 +27,13 @@ class GoogleFont {
     color: Colors.black,
     // decoration: TextDecoration.underline,
   );
+  static final TextStyle weatherTextStyle = GoogleFonts.manrope(
+    fontSize: 36,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 1,
+    color: Colors.white,
+    // decoration: TextDecoration.underline,
+  );
   static final TextStyle userHeadTextStyle = GoogleFonts.manrope(
     fontSize: 24,
     fontWeight: FontWeight.w700,
@@ -70,6 +77,16 @@ class GoogleFont {
     color: kButtonColor,
   );
 
+  static final TextStyle timeDateStyle = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: kWhite,
+  );
+  static final TextStyle weatherSubStyle = GoogleFonts.inter(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    color: kWhite,
+  );
   static final TextStyle userEmailStyle = GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.w500,

@@ -85,6 +85,7 @@ class ScreenForm extends StatelessWidget {
                             name: firstNameController.value.text,
                             lastName: lastNameController.value.text,
                             email: emailController.value.text,
+                            isCelcious: false,
                           ),
                         );
                         snackbarKey.currentState!.showSnackBar(
