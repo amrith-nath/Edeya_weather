@@ -5,6 +5,7 @@ import 'domine/db/db_functions.dart';
 import 'domine/db/user/user_model.dart';
 import 'presentation/core/colors/colors.dart';
 import 'presentation/core/keys/messenger_key.dart';
+import 'presentation/core/keys/navigator_key.dart';
 import 'presentation/screens/splash/screen_splash.dart';
 import 'presentation/theme/themes.dart';
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: snackbarKey,
+      navigatorKey: navigatorKey,
       title: 'Edeya Weather',
       theme: MyTheme.kTheme,
       debugShowCheckedModeBanner: false,
