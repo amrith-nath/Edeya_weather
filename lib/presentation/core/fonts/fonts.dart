@@ -93,6 +93,11 @@ class GoogleFont {
     color: kgreytextColor,
   );
 
+  static final TextStyle userEmailStyleWhite = GoogleFonts.inter(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: kWhite,
+  );
   static final TextStyle onboardTitleStyle = GoogleFonts.robotoCondensed(
     fontSize: 40,
     fontWeight: FontWeight.w500,

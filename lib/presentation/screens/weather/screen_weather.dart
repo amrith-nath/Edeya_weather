@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -18,7 +19,7 @@ import '../../core/size/size.dart';
 import '../login/screen_login.dart';
 
 class ScreenWeather extends StatelessWidget {
-  ScreenWeather({super.key, required this.isCelcious});
+  const ScreenWeather({super.key, required this.isCelcious});
 
   final bool isCelcious;
   @override
@@ -26,12 +27,11 @@ class ScreenWeather extends StatelessWidget {
     final String unit = isCelcious ? '°C' : '°F';
     double temperature = 0;
     final weatherDb = UserBox.getInstanceWeather();
+    final weather = weatherDb.get('weather');
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       BlocProvider.of<WeatherBloc>(context)
           .add(const WeatherEvent.getWeatherReport());
-      var weather = weatherDb.get('weather');
-      log(weather.toString());
     });
 
     return Scaffold(
@@ -73,9 +73,35 @@ class ScreenWeather extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          BlocProvider.of<WeatherBloc>(context)
+              .add(const WeatherEvent.getWeatherReport());
+          await Future.delayed(const Duration(seconds: 3));
+        },
+        child: ListView(
           children: <Widget>[
+            BlocBuilder<WeatherBloc, WeatherState>(
+              builder: (context, errorState) {
+                return errorState.isError
+                    ? SlideInDown(
+                        child: Card(
+                          color: kRed,
+                          child: SizedBox(
+                            height: 70,
+                            child: Center(
+                              child: Text(
+                                'Something Went wrong !\nTry your Internet Connection or Pull Down to Refresh\nThis Data is from the old fetch',
+                                textAlign: TextAlign.center,
+                                style: GoogleFont.userEmailStyleWhite,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox();
+              },
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -84,10 +110,15 @@ class ScreenWeather extends StatelessWidget {
                   kwidth5,
                   BlocBuilder<WeatherBloc, WeatherState>(
                       builder: (context, textState) {
-                    return textState.isLoading
-                        ? loadingWidget(size: 20)
+                    return !textState.isError
+                        ? textState.isLoading
+                            ? loadingWidget(size: 20)
+                            : Text(
+                                textState.weatherReport!.timezone.toString(),
+                                style: GoogleFont.userNameStyle,
+                              )
                         : Text(
-                            textState.weatherReport!.timezone.toString(),
+                            weather!.timezone,
                             style: GoogleFont.userNameStyle,
                           );
                   }),
@@ -115,29 +146,50 @@ class ScreenWeather extends StatelessWidget {
                       child: BlocBuilder<WeatherBloc, WeatherState>(
                         builder: (context, tempState) {
                           if (isCelcious && !tempState.isLoading) {
-                            final double f = double.parse(
-                                tempState.currentWeather!.temp.toString());
-                            temperature = (f - 32) * 5 / 9;
-                          } else if (!tempState.isLoading) {
+                            if (tempState.isError) {
+                              final double f = weather!.temp;
+                              temperature = (f - 32) * 5 / 9;
+                            } else {
+                              final double f = double.parse(
+                                  tempState.currentWeather!.temp.toString());
+                              temperature = (f - 32) * 5 / 9;
+                            }
+                          } else if (!tempState.isLoading &&
+                              !tempState.isError) {
                             temperature = double.parse(
                                 tempState.currentWeather!.temp.toString());
+                          } else {
+                            temperature = weather!.temp;
                           }
 
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              (tempState.isLoading)
-                                  ? loadingWidget(size: 30)
+                              !tempState.isError
+                                  ? tempState.isLoading
+                                      ? loadingWidget(size: 30)
+                                      : Text(
+                                          '${temperature.toStringAsFixed(2)} $unit',
+                                          textAlign: TextAlign.start,
+                                          style: GoogleFont.weatherTextStyle,
+                                        )
                                   : Text(
                                       '${temperature.toStringAsFixed(2)} $unit',
                                       textAlign: TextAlign.start,
                                       style: GoogleFont.weatherTextStyle,
                                     ),
-                              tempState.isLoading
-                                  ? loadingWidget(size: 10)
+                              !tempState.isError
+                                  ? tempState.isLoading
+                                      ? loadingWidget(size: 10)
+                                      : Text(
+                                          tempState.weatherInfo!.main
+                                              .toString(),
+                                          textAlign: TextAlign.start,
+                                          style: GoogleFont.weatherSubStyle,
+                                        )
                                   : Text(
-                                      tempState.weatherInfo!.main.toString(),
+                                      weather!.weathermain,
                                       textAlign: TextAlign.start,
                                       style: GoogleFont.weatherSubStyle,
                                     ),
@@ -152,11 +204,16 @@ class ScreenWeather extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: BlocBuilder<WeatherBloc, WeatherState>(
                           builder: (context, disState) {
-                            return disState.isLoading
-                                ? loadingWidget(size: 5)
+                            return !disState.isError
+                                ? disState.isLoading
+                                    ? loadingWidget(size: 5)
+                                    : Text(
+                                        disState.weatherInfo!.description
+                                            .toString(),
+                                        style: GoogleFont.timeDateStyle,
+                                      )
                                 : Text(
-                                    disState.weatherInfo!.description
-                                        .toString(),
+                                    weather!.weatherInfo,
                                     style: GoogleFont.timeDateStyle,
                                   );
                           },
@@ -169,12 +226,20 @@ class ScreenWeather extends StatelessWidget {
             ),
             BlocBuilder<WeatherBloc, WeatherState>(
               builder: (context, windSstate) {
-                return windSstate.isLoading
-                    ? loadingWidget(size: 30)
+                return !windSstate.isError
+                    ? windSstate.isLoading
+                        ? loadingWidget(size: 30)
+                        : weathercard(
+                            const Color(0xff4D7DF6),
+                            'assets/lottie_json/weather/26494-windy-new-color.json',
+                            windSstate.currentWeather!.windSpeed.toString(),
+                            'Wind Speed',
+                            '-km/h',
+                          )
                     : weathercard(
                         const Color(0xff4D7DF6),
                         'assets/lottie_json/weather/26494-windy-new-color.json',
-                        windSstate.currentWeather!.windSpeed.toString(),
+                        weather!.windSpeed.toString(),
                         'Wind Speed',
                         '-km/h',
                       );
@@ -182,12 +247,20 @@ class ScreenWeather extends StatelessWidget {
             ),
             BlocBuilder<WeatherBloc, WeatherState>(
               builder: (context, humState) {
-                return humState.isLoading
-                    ? loadingWidget(size: 30)
+                return !humState.isError
+                    ? humState.isLoading
+                        ? loadingWidget(size: 30)
+                        : weathercard(
+                            const Color(0xff272727),
+                            'assets/lottie_json/weather/72236-humidly.json',
+                            humState.currentWeather!.humidity.toString(),
+                            'Humidity',
+                            '-g.m-3',
+                          )
                     : weathercard(
                         const Color(0xff272727),
                         'assets/lottie_json/weather/72236-humidly.json',
-                        humState.currentWeather!.humidity.toString(),
+                        weather!.humidity.toString(),
                         'Humidity',
                         '-g.m-3',
                       );
