@@ -6,6 +6,7 @@ import 'application/bloc/weather_bloc.dart';
 import 'domine/d_injection/d_injection.dart';
 import 'domine/db/db_functions.dart';
 import 'domine/db/user/user_model.dart';
+import 'domine/db/weather/weather_model.dart';
 import 'presentation/core/colors/colors.dart';
 import 'presentation/core/keys/messenger_key.dart';
 import 'presentation/core/keys/navigator_key.dart';
@@ -17,7 +18,9 @@ void main() async {
   await configureInjection();
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
+  Hive.registerAdapter(WeatherModelAdapter());
   userBox = await Hive.openBox(boxName);
+  weatherBox = await Hive.openBox(weatherBoxName);
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: kWhite,

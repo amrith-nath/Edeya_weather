@@ -169,6 +169,8 @@ mixin _$WeatherState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isError => throw _privateConstructorUsedError;
   WeatherReport? get weatherReport => throw _privateConstructorUsedError;
+  CurrentWeather? get currentWeather => throw _privateConstructorUsedError;
+  WeatherInfo? get weatherInfo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WeatherStateCopyWith<WeatherState> get copyWith =>
@@ -181,9 +183,16 @@ abstract class $WeatherStateCopyWith<$Res> {
           WeatherState value, $Res Function(WeatherState) then) =
       _$WeatherStateCopyWithImpl<$Res, WeatherState>;
   @useResult
-  $Res call({bool isLoading, bool isError, WeatherReport? weatherReport});
+  $Res call(
+      {bool isLoading,
+      bool isError,
+      WeatherReport? weatherReport,
+      CurrentWeather? currentWeather,
+      WeatherInfo? weatherInfo});
 
   $WeatherReportCopyWith<$Res>? get weatherReport;
+  $CurrentWeatherCopyWith<$Res>? get currentWeather;
+  $WeatherInfoCopyWith<$Res>? get weatherInfo;
 }
 
 /// @nodoc
@@ -202,6 +211,8 @@ class _$WeatherStateCopyWithImpl<$Res, $Val extends WeatherState>
     Object? isLoading = null,
     Object? isError = null,
     Object? weatherReport = freezed,
+    Object? currentWeather = freezed,
+    Object? weatherInfo = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -216,6 +227,14 @@ class _$WeatherStateCopyWithImpl<$Res, $Val extends WeatherState>
           ? _value.weatherReport
           : weatherReport // ignore: cast_nullable_to_non_nullable
               as WeatherReport?,
+      currentWeather: freezed == currentWeather
+          ? _value.currentWeather
+          : currentWeather // ignore: cast_nullable_to_non_nullable
+              as CurrentWeather?,
+      weatherInfo: freezed == weatherInfo
+          ? _value.weatherInfo
+          : weatherInfo // ignore: cast_nullable_to_non_nullable
+              as WeatherInfo?,
     ) as $Val);
   }
 
@@ -230,6 +249,30 @@ class _$WeatherStateCopyWithImpl<$Res, $Val extends WeatherState>
       return _then(_value.copyWith(weatherReport: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CurrentWeatherCopyWith<$Res>? get currentWeather {
+    if (_value.currentWeather == null) {
+      return null;
+    }
+
+    return $CurrentWeatherCopyWith<$Res>(_value.currentWeather!, (value) {
+      return _then(_value.copyWith(currentWeather: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $WeatherInfoCopyWith<$Res>? get weatherInfo {
+    if (_value.weatherInfo == null) {
+      return null;
+    }
+
+    return $WeatherInfoCopyWith<$Res>(_value.weatherInfo!, (value) {
+      return _then(_value.copyWith(weatherInfo: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -240,10 +283,19 @@ abstract class _$$_WeatherStateCopyWith<$Res>
       __$$_WeatherStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool isError, WeatherReport? weatherReport});
+  $Res call(
+      {bool isLoading,
+      bool isError,
+      WeatherReport? weatherReport,
+      CurrentWeather? currentWeather,
+      WeatherInfo? weatherInfo});
 
   @override
   $WeatherReportCopyWith<$Res>? get weatherReport;
+  @override
+  $CurrentWeatherCopyWith<$Res>? get currentWeather;
+  @override
+  $WeatherInfoCopyWith<$Res>? get weatherInfo;
 }
 
 /// @nodoc
@@ -260,6 +312,8 @@ class __$$_WeatherStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? isError = null,
     Object? weatherReport = freezed,
+    Object? currentWeather = freezed,
+    Object? weatherInfo = freezed,
   }) {
     return _then(_$_WeatherState(
       isLoading: null == isLoading
@@ -274,6 +328,14 @@ class __$$_WeatherStateCopyWithImpl<$Res>
           ? _value.weatherReport
           : weatherReport // ignore: cast_nullable_to_non_nullable
               as WeatherReport?,
+      currentWeather: freezed == currentWeather
+          ? _value.currentWeather
+          : currentWeather // ignore: cast_nullable_to_non_nullable
+              as CurrentWeather?,
+      weatherInfo: freezed == weatherInfo
+          ? _value.weatherInfo
+          : weatherInfo // ignore: cast_nullable_to_non_nullable
+              as WeatherInfo?,
     ));
   }
 }
@@ -282,7 +344,11 @@ class __$$_WeatherStateCopyWithImpl<$Res>
 
 class _$_WeatherState implements _WeatherState {
   const _$_WeatherState(
-      {required this.isLoading, required this.isError, this.weatherReport});
+      {required this.isLoading,
+      required this.isError,
+      this.weatherReport,
+      this.currentWeather,
+      this.weatherInfo});
 
   @override
   final bool isLoading;
@@ -290,10 +356,14 @@ class _$_WeatherState implements _WeatherState {
   final bool isError;
   @override
   final WeatherReport? weatherReport;
+  @override
+  final CurrentWeather? currentWeather;
+  @override
+  final WeatherInfo? weatherInfo;
 
   @override
   String toString() {
-    return 'WeatherState(isLoading: $isLoading, isError: $isError, weatherReport: $weatherReport)';
+    return 'WeatherState(isLoading: $isLoading, isError: $isError, weatherReport: $weatherReport, currentWeather: $currentWeather, weatherInfo: $weatherInfo)';
   }
 
   @override
@@ -305,12 +375,16 @@ class _$_WeatherState implements _WeatherState {
                 other.isLoading == isLoading) &&
             (identical(other.isError, isError) || other.isError == isError) &&
             (identical(other.weatherReport, weatherReport) ||
-                other.weatherReport == weatherReport));
+                other.weatherReport == weatherReport) &&
+            (identical(other.currentWeather, currentWeather) ||
+                other.currentWeather == currentWeather) &&
+            (identical(other.weatherInfo, weatherInfo) ||
+                other.weatherInfo == weatherInfo));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isLoading, isError, weatherReport);
+  int get hashCode => Object.hash(runtimeType, isLoading, isError,
+      weatherReport, currentWeather, weatherInfo);
 
   @JsonKey(ignore: true)
   @override
@@ -323,7 +397,9 @@ abstract class _WeatherState implements WeatherState {
   const factory _WeatherState(
       {required final bool isLoading,
       required final bool isError,
-      final WeatherReport? weatherReport}) = _$_WeatherState;
+      final WeatherReport? weatherReport,
+      final CurrentWeather? currentWeather,
+      final WeatherInfo? weatherInfo}) = _$_WeatherState;
 
   @override
   bool get isLoading;
@@ -331,6 +407,10 @@ abstract class _WeatherState implements WeatherState {
   bool get isError;
   @override
   WeatherReport? get weatherReport;
+  @override
+  CurrentWeather? get currentWeather;
+  @override
+  WeatherInfo? get weatherInfo;
   @override
   @JsonKey(ignore: true)
   _$$_WeatherStateCopyWith<_$_WeatherState> get copyWith =>

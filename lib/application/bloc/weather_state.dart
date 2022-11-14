@@ -6,8 +6,10 @@ class WeatherState with _$WeatherState {
     required bool isLoading,
     required bool isError,
     WeatherReport? weatherReport,
+    CurrentWeather? currentWeather,
+    WeatherInfo? weatherInfo,
   }) = _WeatherState;
 
   factory WeatherState.initial() =>
-      const WeatherState(isLoading: false, isError: false);
+      const WeatherState(isLoading: true, isError: false);
 }

@@ -23,6 +23,8 @@ mixin _$WeatherReport {
   double? get lat => throw _privateConstructorUsedError;
   double? get lon => throw _privateConstructorUsedError;
   String? get timezone => throw _privateConstructorUsedError;
+  @JsonKey(name: 'current')
+  CurrentWeather? get currentWeather => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,13 @@ abstract class $WeatherReportCopyWith<$Res> {
           WeatherReport value, $Res Function(WeatherReport) then) =
       _$WeatherReportCopyWithImpl<$Res, WeatherReport>;
   @useResult
-  $Res call({double? lat, double? lon, String? timezone});
+  $Res call(
+      {double? lat,
+      double? lon,
+      String? timezone,
+      @JsonKey(name: 'current') CurrentWeather? currentWeather});
+
+  $CurrentWeatherCopyWith<$Res>? get currentWeather;
 }
 
 /// @nodoc
@@ -55,6 +63,7 @@ class _$WeatherReportCopyWithImpl<$Res, $Val extends WeatherReport>
     Object? lat = freezed,
     Object? lon = freezed,
     Object? timezone = freezed,
+    Object? currentWeather = freezed,
   }) {
     return _then(_value.copyWith(
       lat: freezed == lat
@@ -69,7 +78,23 @@ class _$WeatherReportCopyWithImpl<$Res, $Val extends WeatherReport>
           ? _value.timezone
           : timezone // ignore: cast_nullable_to_non_nullable
               as String?,
+      currentWeather: freezed == currentWeather
+          ? _value.currentWeather
+          : currentWeather // ignore: cast_nullable_to_non_nullable
+              as CurrentWeather?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CurrentWeatherCopyWith<$Res>? get currentWeather {
+    if (_value.currentWeather == null) {
+      return null;
+    }
+
+    return $CurrentWeatherCopyWith<$Res>(_value.currentWeather!, (value) {
+      return _then(_value.copyWith(currentWeather: value) as $Val);
+    });
   }
 }
 
@@ -81,7 +106,14 @@ abstract class _$$_WeatherReportCopyWith<$Res>
       __$$_WeatherReportCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double? lat, double? lon, String? timezone});
+  $Res call(
+      {double? lat,
+      double? lon,
+      String? timezone,
+      @JsonKey(name: 'current') CurrentWeather? currentWeather});
+
+  @override
+  $CurrentWeatherCopyWith<$Res>? get currentWeather;
 }
 
 /// @nodoc
@@ -98,6 +130,7 @@ class __$$_WeatherReportCopyWithImpl<$Res>
     Object? lat = freezed,
     Object? lon = freezed,
     Object? timezone = freezed,
+    Object? currentWeather = freezed,
   }) {
     return _then(_$_WeatherReport(
       lat: freezed == lat
@@ -112,6 +145,10 @@ class __$$_WeatherReportCopyWithImpl<$Res>
           ? _value.timezone
           : timezone // ignore: cast_nullable_to_non_nullable
               as String?,
+      currentWeather: freezed == currentWeather
+          ? _value.currentWeather
+          : currentWeather // ignore: cast_nullable_to_non_nullable
+              as CurrentWeather?,
     ));
   }
 }
@@ -120,7 +157,10 @@ class __$$_WeatherReportCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_WeatherReport implements _WeatherReport {
   const _$_WeatherReport(
-      {required this.lat, required this.lon, required this.timezone});
+      {required this.lat,
+      required this.lon,
+      required this.timezone,
+      @JsonKey(name: 'current') required this.currentWeather});
 
   factory _$_WeatherReport.fromJson(Map<String, dynamic> json) =>
       _$$_WeatherReportFromJson(json);
@@ -131,10 +171,13 @@ class _$_WeatherReport implements _WeatherReport {
   final double? lon;
   @override
   final String? timezone;
+  @override
+  @JsonKey(name: 'current')
+  final CurrentWeather? currentWeather;
 
   @override
   String toString() {
-    return 'WeatherReport(lat: $lat, lon: $lon, timezone: $timezone)';
+    return 'WeatherReport(lat: $lat, lon: $lon, timezone: $timezone, currentWeather: $currentWeather)';
   }
 
   @override
@@ -145,12 +188,15 @@ class _$_WeatherReport implements _WeatherReport {
             (identical(other.lat, lat) || other.lat == lat) &&
             (identical(other.lon, lon) || other.lon == lon) &&
             (identical(other.timezone, timezone) ||
-                other.timezone == timezone));
+                other.timezone == timezone) &&
+            (identical(other.currentWeather, currentWeather) ||
+                other.currentWeather == currentWeather));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, lat, lon, timezone);
+  int get hashCode =>
+      Object.hash(runtimeType, lat, lon, timezone, currentWeather);
 
   @JsonKey(ignore: true)
   @override
@@ -170,7 +216,9 @@ abstract class _WeatherReport implements WeatherReport {
   const factory _WeatherReport(
       {required final double? lat,
       required final double? lon,
-      required final String? timezone}) = _$_WeatherReport;
+      required final String? timezone,
+      @JsonKey(name: 'current')
+          required final CurrentWeather? currentWeather}) = _$_WeatherReport;
 
   factory _WeatherReport.fromJson(Map<String, dynamic> json) =
       _$_WeatherReport.fromJson;
@@ -181,6 +229,9 @@ abstract class _WeatherReport implements WeatherReport {
   double? get lon;
   @override
   String? get timezone;
+  @override
+  @JsonKey(name: 'current')
+  CurrentWeather? get currentWeather;
   @override
   @JsonKey(ignore: true)
   _$$_WeatherReportCopyWith<_$_WeatherReport> get copyWith =>

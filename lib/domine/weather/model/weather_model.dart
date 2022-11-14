@@ -10,6 +10,7 @@ class WeatherReport with _$WeatherReport {
     required double? lat,
     required double? lon,
     required String? timezone,
+    @JsonKey(name: 'current') required CurrentWeather? currentWeather,
   }) = _WeatherReport;
 
   factory WeatherReport.fromJson(Map<String, dynamic> json) =>

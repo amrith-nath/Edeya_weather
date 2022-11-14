@@ -1,10 +1,14 @@
 // ignore_for_file: always_specify_types, sort_constructors_first
 
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domine/db/db_functions.dart';
+import '../../domine/db/weather/weather_model.dart';
 import '../../domine/weather/failures/weather_failures.dart';
 import '../../domine/weather/model/weather_model.dart';
 import '../../domine/weather/repo/i_weather_repo.dart';
@@ -26,17 +30,23 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       final Either<WeatherFailures, WeatherReport> weatherReportOption =
           await iWetherRepo.getWeatherReport();
 
+      log(weatherReportOption.toString());
+
       final WeatherState newState = weatherReportOption.fold(
-        (failures) => state.copyWith(
-          isLoading: false,
-          isError: true,
-        ),
-        (weatherReport) => state.copyWith(
+          (failures) => state.copyWith(
+                isLoading: false,
+                isError: true,
+              ), (weatherReport) {
+        // saveToDb(weatherReport);
+
+        return state.copyWith(
           isError: false,
           isLoading: false,
           weatherReport: weatherReport,
-        ),
-      );
+          currentWeather: weatherReport.currentWeather,
+          weatherInfo: weatherReport.currentWeather!.weather![0],
+        );
+      });
 
       emit(newState);
 //--------------

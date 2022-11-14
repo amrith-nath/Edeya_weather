@@ -11,6 +11,9 @@ _$_WeatherReport _$$_WeatherReportFromJson(Map<String, dynamic> json) =>
       lat: (json['lat'] as num?)?.toDouble(),
       lon: (json['lon'] as num?)?.toDouble(),
       timezone: json['timezone'] as String?,
+      currentWeather: json['current'] == null
+          ? null
+          : CurrentWeather.fromJson(json['current'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_WeatherReportToJson(_$_WeatherReport instance) =>
@@ -18,6 +21,7 @@ Map<String, dynamic> _$$_WeatherReportToJson(_$_WeatherReport instance) =>
       'lat': instance.lat,
       'lon': instance.lon,
       'timezone': instance.timezone,
+      'current': instance.currentWeather,
     };
 
 _$_CurrentWeather _$$_CurrentWeatherFromJson(Map<String, dynamic> json) =>
