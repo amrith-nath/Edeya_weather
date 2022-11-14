@@ -28,7 +28,7 @@ class ScreenWeather extends StatelessWidget {
     double temperature = 0;
     final weatherDb = UserBox.getInstanceWeather();
     final weather = weatherDb.get('weather');
-
+    const int duration = 400;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       BlocProvider.of<WeatherBloc>(context)
           .add(const WeatherEvent.getWeatherReport());
@@ -125,123 +125,135 @@ class ScreenWeather extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                  child: Container(
-                color: kBlue,
-                height: 200,
-                child: Stack(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Lottie.asset(
-                            'assets/lottie_json/weather/4803-weather-storm.json',
-                            width: 100),
+            SlideInUp(
+              duration: const Duration(milliseconds: duration),
+              key: const Key('w0'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                    child: Container(
+                  color: kBlue,
+                  height: 200,
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Lottie.asset(
+                              'assets/lottie_json/weather/4803-weather-storm.json',
+                              width: 100),
+                        ),
                       ),
-                    ),
-                    Align(
-                      child: BlocBuilder<WeatherBloc, WeatherState>(
-                        builder: (context, tempState) {
-                          if (isCelcious && !tempState.isLoading) {
-                            if (tempState.isError) {
-                              final double f = weather!.temp;
-                              temperature = (f - 32) * 5 / 9;
-                            } else {
-                              final double f = double.parse(
-                                  tempState.currentWeather!.temp.toString());
-                              temperature = (f - 32) * 5 / 9;
-                            }
-                          } else if (!tempState.isLoading &&
-                              !tempState.isError) {
-                            temperature = double.parse(
-                                tempState.currentWeather!.temp.toString());
-                          } else {
-                            temperature = weather!.temp;
-                          }
-
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              !tempState.isError
-                                  ? tempState.isLoading
-                                      ? loadingWidget(size: 30)
-                                      : Text(
-                                          '${temperature.toStringAsFixed(2)} $unit',
-                                          textAlign: TextAlign.start,
-                                          style: GoogleFont.weatherTextStyle,
-                                        )
-                                  : Text(
-                                      '${temperature.toStringAsFixed(2)} $unit',
-                                      textAlign: TextAlign.start,
-                                      style: GoogleFont.weatherTextStyle,
-                                    ),
-                              !tempState.isError
-                                  ? tempState.isLoading
-                                      ? loadingWidget(size: 10)
-                                      : Text(
-                                          tempState.weatherInfo!.main
-                                              .toString(),
-                                          textAlign: TextAlign.start,
-                                          style: GoogleFont.weatherSubStyle,
-                                        )
-                                  : Text(
-                                      weather!.weathermain,
-                                      textAlign: TextAlign.start,
-                                      style: GoogleFont.weatherSubStyle,
-                                    ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      Align(
                         child: BlocBuilder<WeatherBloc, WeatherState>(
-                          builder: (context, disState) {
-                            return !disState.isError
-                                ? disState.isLoading
-                                    ? loadingWidget(size: 5)
+                          builder: (context, tempState) {
+                            if (isCelcious && !tempState.isLoading) {
+                              if (tempState.isError) {
+                                final double f = weather!.temp;
+                                temperature = (f - 32) * 5 / 9;
+                              } else {
+                                final double f = double.parse(
+                                    tempState.currentWeather!.temp.toString());
+                                temperature = (f - 32) * 5 / 9;
+                              }
+                            } else if (!tempState.isLoading &&
+                                !tempState.isError) {
+                              temperature = double.parse(
+                                  tempState.currentWeather!.temp.toString());
+                            } else {
+                              temperature = weather!.temp;
+                            }
+
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                !tempState.isError
+                                    ? tempState.isLoading
+                                        ? loadingWidget(size: 30)
+                                        : Text(
+                                            '${temperature.toStringAsFixed(2)} $unit',
+                                            textAlign: TextAlign.start,
+                                            style: GoogleFont.weatherTextStyle,
+                                          )
                                     : Text(
-                                        disState.weatherInfo!.description
-                                            .toString(),
-                                        style: GoogleFont.timeDateStyle,
-                                      )
-                                : Text(
-                                    weather!.weatherInfo,
-                                    style: GoogleFont.timeDateStyle,
-                                  );
+                                        '${temperature.toStringAsFixed(2)} $unit',
+                                        textAlign: TextAlign.start,
+                                        style: GoogleFont.weatherTextStyle,
+                                      ),
+                                !tempState.isError
+                                    ? tempState.isLoading
+                                        ? loadingWidget(size: 10)
+                                        : Text(
+                                            tempState.weatherInfo!.main
+                                                .toString(),
+                                            textAlign: TextAlign.start,
+                                            style: GoogleFont.weatherSubStyle,
+                                          )
+                                    : Text(
+                                        weather!.weathermain,
+                                        textAlign: TextAlign.start,
+                                        style: GoogleFont.weatherSubStyle,
+                                      ),
+                              ],
+                            );
                           },
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: BlocBuilder<WeatherBloc, WeatherState>(
+                            builder: (context, disState) {
+                              return !disState.isError
+                                  ? disState.isLoading
+                                      ? loadingWidget(size: 5)
+                                      : Text(
+                                          disState.weatherInfo!.description
+                                              .toString(),
+                                          style: GoogleFont.timeDateStyle,
+                                        )
+                                  : Text(
+                                      weather!.weatherInfo,
+                                      style: GoogleFont.timeDateStyle,
+                                    );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+              ),
             ),
             BlocBuilder<WeatherBloc, WeatherState>(
               builder: (context, windSstate) {
                 return !windSstate.isError
                     ? windSstate.isLoading
                         ? loadingWidget(size: 30)
-                        : weathercard(
-                            const Color(0xff4D7DF6),
-                            'assets/lottie_json/weather/26494-windy-new-color.json',
-                            windSstate.currentWeather!.windSpeed.toString(),
-                            'Wind Speed',
-                            '-km/h',
+                        : SlideInUp(
+                            duration: const Duration(milliseconds: duration),
+                            key: const Key('w1'),
+                            child: weathercard(
+                              const Color(0xff4D7DF6),
+                              'assets/lottie_json/weather/26494-windy-new-color.json',
+                              windSstate.currentWeather!.windSpeed.toString(),
+                              'Wind Speed',
+                              '-km/h',
+                            ),
                           )
-                    : weathercard(
-                        const Color(0xff4D7DF6),
-                        'assets/lottie_json/weather/26494-windy-new-color.json',
-                        weather!.windSpeed.toString(),
-                        'Wind Speed',
-                        '-km/h',
+                    : SlideInUp(
+                        duration: const Duration(milliseconds: duration),
+                        key: const Key('w2'),
+                        child: weathercard(
+                          const Color(0xff4D7DF6),
+                          'assets/lottie_json/weather/26494-windy-new-color.json',
+                          weather!.windSpeed.toString(),
+                          'Wind Speed',
+                          '-km/h',
+                        ),
                       );
               },
             ),
@@ -250,19 +262,27 @@ class ScreenWeather extends StatelessWidget {
                 return !humState.isError
                     ? humState.isLoading
                         ? loadingWidget(size: 30)
-                        : weathercard(
-                            const Color(0xff272727),
-                            'assets/lottie_json/weather/72236-humidly.json',
-                            humState.currentWeather!.humidity.toString(),
-                            'Humidity',
-                            '-g.m-3',
+                        : SlideInUp(
+                            duration: const Duration(milliseconds: duration),
+                            key: const Key('w3'),
+                            child: weathercard(
+                              const Color(0xff272727),
+                              'assets/lottie_json/weather/72236-humidly.json',
+                              humState.currentWeather!.humidity.toString(),
+                              'Humidity',
+                              '-g.m-3',
+                            ),
                           )
-                    : weathercard(
-                        const Color(0xff272727),
-                        'assets/lottie_json/weather/72236-humidly.json',
-                        weather!.humidity.toString(),
-                        'Humidity',
-                        '-g.m-3',
+                    : SlideInUp(
+                        duration: const Duration(milliseconds: duration),
+                        key: const Key('w4'),
+                        child: weathercard(
+                          const Color(0xff272727),
+                          'assets/lottie_json/weather/72236-humidly.json',
+                          weather!.humidity.toString(),
+                          'Humidity',
+                          '-g.m-3',
+                        ),
                       );
               },
             ),
