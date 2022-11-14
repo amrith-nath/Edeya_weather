@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'application/bloc/weather_bloc.dart';
+import 'domine/d_injection/d_injection.dart';
 import 'domine/db/db_functions.dart';
 import 'domine/db/user/user_model.dart';
 import 'presentation/core/colors/colors.dart';
@@ -11,6 +14,7 @@ import 'presentation/theme/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await configureInjection();
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
   userBox = await Hive.openBox(boxName);
@@ -30,13 +34,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      scaffoldMessengerKey: snackbarKey,
-      navigatorKey: navigatorKey,
-      title: 'Edeya Weather',
-      theme: MyTheme.kTheme,
-      debugShowCheckedModeBanner: false,
-      home: const ScreenSplash(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<WeatherBloc>(
+          create: (ctx) => getIt<WeatherBloc>(),
+        )
+      ],
+      child: MaterialApp(
+        scaffoldMessengerKey: snackbarKey,
+        navigatorKey: navigatorKey,
+        title: 'Edeya Weather',
+        theme: MyTheme.kTheme,
+        debugShowCheckedModeBanner: false,
+        home: const ScreenSplash(),
+      ),
     );
   }
 }

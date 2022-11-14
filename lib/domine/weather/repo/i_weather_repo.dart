@@ -1,6 +1,8 @@
+import 'package:dartz/dartz.dart';
 
+import '../failures/weather_failures.dart';
+import '../model/weather_model.dart';
 
-
-// abstract class IDownloadRepo {
-//   Future<Either<MainFailure, List<Downloads>>> getDownloadsImage();
-// }
+abstract class IWetherRepo {
+  Future<Either<WeatherFailures, WeatherReport>> getWeatherReport();
+}
