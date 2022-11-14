@@ -20,19 +20,22 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       name: fields[0] as String,
       lastName: fields[1] as String,
       email: fields[2] as String,
+      isCelcious: fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.lastName)
       ..writeByte(2)
-      ..write(obj.email);
+      ..write(obj.email)
+      ..writeByte(3)
+      ..write(obj.isCelcious);
   }
 
   @override

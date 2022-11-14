@@ -37,7 +37,7 @@ class ScreenHome extends StatelessWidget {
                 Navigator.of(context).push(
                   PageTransition<ScreenHome>(
                     child: ScreenForm(),
-                    childCurrent: ScreenHome(),
+                    childCurrent: const ScreenHome(),
                     type: PageTransitionType.rightToLeftJoined,
                     reverseDuration: const Duration(milliseconds: 500),
                     duration: const Duration(milliseconds: 500),
@@ -77,6 +77,47 @@ class ScreenHome extends StatelessWidget {
                                     top: 8.0, left: 8, right: 8),
                                 child: Slidable(
                                   key: UniqueKey(),
+                                  startActionPane: ActionPane(
+                                    motion: const ScrollMotion(),
+                                    dismissible:
+                                        DismissiblePane(onDismissed: () async {
+                                      Navigator.of(context).push(
+                                        PageTransition<ScreenWeather>(
+                                          child: ScreenWeather(
+                                              isCelcious: user!.isCelcious),
+                                          type: PageTransitionType.leftToRight,
+                                          reverseDuration:
+                                              const Duration(milliseconds: 400),
+                                          duration:
+                                              const Duration(milliseconds: 400),
+                                          curve: Curves.easeIn,
+                                        ),
+                                      );
+                                    }),
+                                    children: <Widget>[
+                                      SlidableAction(
+                                        onPressed: (BuildContext ctx) async {
+                                          Navigator.of(context).push(
+                                            PageTransition<ScreenWeather>(
+                                              child: ScreenWeather(
+                                                  isCelcious: user!.isCelcious),
+                                              type: PageTransitionType
+                                                  .leftToRight,
+                                              reverseDuration: const Duration(
+                                                  milliseconds: 400),
+                                              duration: const Duration(
+                                                  milliseconds: 400),
+                                              curve: Curves.easeIn,
+                                            ),
+                                          );
+                                        },
+                                        backgroundColor: kBlue,
+                                        foregroundColor: kWhite,
+                                        icon: Icons.cloud,
+                                        label: 'Weather',
+                                      ),
+                                    ],
+                                  ),
                                   endActionPane: ActionPane(
                                     motion: const ScrollMotion(),
                                     dismissible:
