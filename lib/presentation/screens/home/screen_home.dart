@@ -13,6 +13,7 @@ import '../../core/fonts/fonts.dart';
 import '../../core/keys/messenger_key.dart';
 import '../../core/keys/navigator_key.dart';
 import '../form/screen_form.dart';
+import '../weather/screen_weather.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -36,7 +37,7 @@ class ScreenHome extends StatelessWidget {
                 Navigator.of(context).push(
                   PageTransition<ScreenHome>(
                     child: ScreenForm(),
-                    childCurrent: const ScreenHome(),
+                    childCurrent: ScreenHome(),
                     type: PageTransitionType.rightToLeftJoined,
                     reverseDuration: const Duration(milliseconds: 500),
                     duration: const Duration(milliseconds: 500),
@@ -75,9 +76,7 @@ class ScreenHome extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                     top: 8.0, left: 8, right: 8),
                                 child: Slidable(
-                                  key: Key(
-                                    'dismissable $index',
-                                  ),
+                                  key: UniqueKey(),
                                   endActionPane: ActionPane(
                                     motion: const ScrollMotion(),
                                     dismissible:
@@ -98,18 +97,36 @@ class ScreenHome extends StatelessWidget {
                                     ],
                                   ),
                                   child: Card(
-                                      color: kWhite,
-                                      elevation: 4,
-                                      child: userListTile(
-                                          user: user!,
-                                          onChanged: (bool? value) {
-                                            log(value.toString());
+                                    color: kWhite,
+                                    elevation: 4,
+                                    child: userListTile(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          PageTransition<ScreenWeather>(
+                                            child: ScreenWeather(
+                                                isCelcious: user.isCelcious),
+                                            type:
+                                                PageTransitionType.leftToRight,
+                                            reverseDuration: const Duration(
+                                                milliseconds: 400),
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            curve: Curves.easeIn,
+                                          ),
+                                        );
+                                      },
+                                      user: user!,
+                                      onChanged: (bool? value) {
+                                        log(value.toString());
 
-                                            users.putAt(
-                                              index,
-                                              user.copyWith(isCelcious: value),
-                                            );
-                                          })),
+                                        users.putAt(
+                                          index,
+                                          user.copyWith(isCelcious: value),
+                                        );
+                                      },
+                                      isCelcious: user.isCelcious,
+                                    ),
+                                  ),
                                 ),
                               );
                             })
@@ -169,13 +186,17 @@ class ScreenHome extends StatelessWidget {
   }
 
   Padding userListTile(
-      {required UserModel user, required Function(bool?) onChanged}) {
+      {required UserModel user,
+      required Function(bool?) onChanged,
+      required Function() onTap,
+      required bool isCelcious}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
           height: 70,
           child: Center(
             child: ListTile(
+              onTap: onTap,
               leading: const CircleAvatar(
                 backgroundColor: kButtonColor,
                 radius: 30,
@@ -192,7 +213,13 @@ class ScreenHome extends StatelessWidget {
                 user.email,
                 style: GoogleFont.userEmailStyle,
               ),
-              trailing: Switch(value: user.isCelcious, onChanged: onChanged),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Switch.adaptive(value: user.isCelcious, onChanged: onChanged),
+                  Text(isCelcious ? '°C' : '°F'),
+                ],
+              ),
             ),
           )),
     );

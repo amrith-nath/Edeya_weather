@@ -78,6 +78,8 @@ class ScreenForm extends StatelessWidget {
                     elevatedButtonWidget(currentFocus, context, () async {
                       if (_formKey.currentState!.validate()) {
                         currentFocus.unfocus();
+                        Navigator.of(context).pop();
+
                         await box.add(
                           UserModel(
                             name: firstNameController.value.text,
@@ -92,7 +94,6 @@ class ScreenForm extends StatelessWidget {
                           ),
                         );
                         // ignore: use_build_context_synchronously
-                        Navigator.of(context).pop();
                       }
                     }, 'Add'),
                     elevatedButtonWidget(
