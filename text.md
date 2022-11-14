@@ -15,10 +15,10 @@ Weather API URL: https://api.openweathermap.org/data/2.5/onecall?lat=12.90828476
 7. Fetch a record from the database and display it in the user List screen. (First name, Last name, Email)
 8. Delete records one by one. (using swipe to delete functionality)
 9. By clicking on the user it’ll redirect to the Weather screen(place a toggle button in trailing section of the list tile and if the button is enabled display the weather in degree celsius)
-   11)implement offline cashing(if no internet is available or if the user changes the toggle button state save the state locally)
+   11.implement offline cashing(if no internet is available or if the user changes the toggle button state save the state locally)
 10. Integrate an Open weather map.
 11. Call above Mentioned URL.
-12. Displayed today's weather data (temp, Weather type, humidity, wind_speed)
+12. Displayed today's weather data (temp, Weather type, humidity, wind_speed).
 13. Put Logout button at right side and back button on the left side in open weather screen.
 14. add logout and back button navigation flow on it.
 

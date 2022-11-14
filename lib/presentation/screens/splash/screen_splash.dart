@@ -84,7 +84,7 @@ class ScreenSplash extends StatelessWidget {
     await Future<void>.delayed(const Duration(seconds: 6));
     log('Navigate to Onboarding Screen');
     final bool loginState = await loginCheck();
-    if (loginState) {
+    if (!loginState) {
       // ignore: use_build_context_synchronously
       navigate(context, const ScreenOnboarding());
     } else {

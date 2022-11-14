@@ -90,7 +90,7 @@ class ScreenLogin extends StatelessWidget {
         passwordController.value.text == 'Test@123456') {
       final SharedPreferences preferences =
           await SharedPreferences.getInstance();
-      await preferences.setBool('', true);
+      await preferences.setBool('islogin', true);
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
         PageTransition<ScreenHome>(

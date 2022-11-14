@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 
+import '../../../domine/db/db_functions.dart';
 import '../../../domine/db/user/user_model.dart';
 import '../../core/colors/colors.dart';
 import '../../core/fonts/fonts.dart';
+import '../../core/keys/messenger_key.dart';
+import '../form/screen_form.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
@@ -11,17 +17,28 @@ class ScreenHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      // backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Users',
-          style: TextStyle(color: kButtonColor),
+          style: GoogleFont.userHeadTextStyle,
         ),
         centerTitle: true,
         elevation: 4,
         actions: <Widget>[
           TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                PageTransition<ScreenHome>(
+                  child: ScreenForm(),
+                  childCurrent: const ScreenHome(),
+                  type: PageTransitionType.rightToLeftJoined,
+                  reverseDuration: const Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeIn,
+                ),
+              );
+            },
             icon: const Icon(
               Icons.add,
               color: kBlack,
@@ -38,31 +55,71 @@ class ScreenHome extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 10,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) => Padding(
-                      padding:
-                          const EdgeInsets.only(top: 8.0, left: 8, right: 8),
-                      child: Card(
-                        color: kWhite,
-                        elevation: 4,
-                        child: Slidable(
-                          key: Key(
-                            'dismissable $index',
-                          ),
-                          child: userListTile(
-                            user: UserModel(
-                                name: 'hjhjhh',
-                                lastName: 'njsu',
-                                email: 'bhhvh'),
-                          ),
-                        ),
-                      ),
-                    )),
+            child: ValueListenableBuilder<Box<UserModel>>(
+                valueListenable: userBox.listenable(),
+                builder: (BuildContext context, Box<UserModel> users,
+                    Widget? child) {
+                  return users.isNotEmpty
+                      ? ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: users.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            final UserModel? user = users.getAt(index);
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, left: 8, right: 8),
+                              child: Slidable(
+                                key: Key(
+                                  'dismissable $index',
+                                ),
+                                endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  dismissible:
+                                      DismissiblePane(onDismissed: () async {
+                                    await deleteUser(index, context, users);
+                                  }),
+                                  children: <Widget>[
+                                    SlidableAction(
+                                      onPressed: (BuildContext ctx) async {
+                                        await deleteUser(index, context, users);
+                                      },
+                                      backgroundColor: kRed,
+                                      foregroundColor: kWhite,
+                                      icon: Icons.delete,
+                                      label: 'Delete',
+                                    ),
+                                  ],
+                                ),
+                                child: Card(
+                                    color: kWhite,
+                                    elevation: 4,
+                                    child: userListTile(user: user!)),
+                              ),
+                            );
+                          })
+                      : Center(
+                          child: Column(
+                          children: <Widget>[
+                            Lottie.asset('assets/lottie_json/98119-error.json'),
+                            const Text('No Users found')
+                          ],
+                        ));
+                }),
           )
         ],
+      ),
+    );
+  }
+
+  Future<void> deleteUser(
+      int index, BuildContext ctx, Box<UserModel> box) async {
+    await box.deleteAt(index);
+
+    snackbarKey.currentState!.showSnackBar(
+      const SnackBar(
+        backgroundColor: kRed,
+        content: Text('User Deleted'),
       ),
     );
   }

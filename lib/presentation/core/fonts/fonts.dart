@@ -27,6 +27,13 @@ class GoogleFont {
     color: Colors.black,
     // decoration: TextDecoration.underline,
   );
+  static final TextStyle userHeadTextStyle = GoogleFonts.manrope(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1,
+    color: Colors.black,
+    // decoration: TextDecoration.underline,
+  );
   static final TextStyle splashStyleYellow = GoogleFonts.poppins(
     fontSize: 42,
     fontWeight: FontWeight.w600,
@@ -60,7 +67,7 @@ class GoogleFont {
   static final TextStyle userNameStyle = GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.w500,
-    color: kgreytextColor,
+    color: kButtonColor,
   );
 
   static final TextStyle userEmailStyle = GoogleFonts.inter(
